@@ -1,0 +1,35 @@
+# Proprietary application and build artifacts
+*.apk
+*.aab
+*.ipa
+*.swf
+*.ane
+*.so
+*.jar
+*.aar
+*.cabapp
+*.cabmod
+*.cabprf
+*.cabres
+
+# Local analysis output and downloaded tools
+analysis-output/
+work/
+outputs/
+tools/
+
+# Android/Java/build output
+.gradle/
+build/
+out/
+bin/
+obj/
+*.class
+
+# IDE and OS files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
