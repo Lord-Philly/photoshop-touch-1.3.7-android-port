@@ -18,6 +18,7 @@ O aparelho foi detectado e mantido conectado pelo ADB durante os testes.
 | Diagnóstico target 24 | Sucesso | Crash | Mesmo bloqueio nativo; reduzir target não resolve |
 | AIR 51 target 36, sem ANEs declaradas | Sucesso | Processo vivo; splash | Runtime moderno carrega; funcionalidade do editor não comprovada |
 | AIR 51 target 36, ANEs reconstruídas | Sucesso | Crash | ANEs antigas recusadas por `DT_TEXTREL` |
+| AIR 51 target 36, camada ANE PIC | Sucesso | Processo vivo; splash removido | Três bibliotecas substitutas carregam; editor ainda não validado |
 
 ## APK original
 
@@ -98,6 +99,24 @@ O símbolo JNI existe na biblioteca, mas o linker a rejeita antes de disponibili
 Uma variante que neutraliza a carga Java das ANEs chega a `JNI DETECTED ERROR IN
 APPLICATION: java_object == null`, confirmando uma segunda dependência nativa do
 SWF. O relatório completo está em [air51-modern-poc.md](air51-modern-poc.md).
+
+## Camada de compatibilidade PIC
+
+Foi compilada uma camada ARMv7 com NDK 25.2, `APP_PLATFORM=android-24` e código
+PIC. Ela exporta os mesmos 119 nomes JNI observados em
+`libTTPixelExtensionAndroid.so`, além de bibliotecas mínimas para `libsibsynclib`
+e `SyncEngine`. Os três carregamentos passaram no Android 16:
+
+```text
+Load .../libsibsynclib.so ...: ok
+Load .../libair.com.adobe.cc.sync.SyncEngine.so ...: ok
+Load .../libTTPixelExtensionAndroid.so ...: ok
+AIR - removed splash screen
+```
+
+O processo permaneceu vivo por pelo menos 27 segundos. A camada está em
+[`native/ane-compat`](../native/ane-compat), mas seus métodos de edição são
+placeholders; ainda não é correto marcar o editor como funcional.
 
 ## Próxima ação técnica
 
