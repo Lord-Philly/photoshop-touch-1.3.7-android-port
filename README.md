@@ -2,7 +2,7 @@
 
 Investigação técnica para avaliar a portabilidade autorizada do Adobe Photoshop Touch 1.3.7 para versões modernas do Android.
 
-> Status: **descoberta/autópsia**. Nenhum APK modificado foi produzido e o APK original não faz parte deste repositório.
+> Status: **projeto ativo — autópsia e prova de conceito**. O APK original está disponível como asset da Release pública; ele não é versionado no histórico Git.
 
 ## Objetivo
 
@@ -19,6 +19,16 @@ Determinar se o APK antigo pode ser executado em Android moderno preservando o m
 - A assinatura original da Adobe não está disponível; uma build modificada exigirá uma chave diferente.
 
 Veja o relatório completo em [docs/initial-apk-autopsy.md](docs/initial-apk-autopsy.md).
+
+## APK original
+
+O APK original está hospedado na Release [`v1.3.7-original`](https://github.com/Lord-Philly/photoshop-touch-1.3.7-android-port/releases/tag/v1.3.7-original). O SHA-256 do asset é:
+
+```text
+C57E409493F46F4B9404678A777E23CEE7FEDCF921427435F4767EFDA5823A85
+```
+
+O fato de o aplicativo estar descontinuado não implica que o software tenha se tornado domínio público. O asset é mantido aqui como cópia de análise/arquivo, com a origem registrada.
 
 ## Como reproduzir a inspeção
 
@@ -45,4 +55,3 @@ scripts/
 ## Limites e segurança
 
 Este repositório contém documentação e automação de análise, não o aplicativo proprietário nem seus binários. O trabalho deve ser feito somente com autorização adequada, sem burlar DRM, licenciamento, autenticação ou serviços remotos. Não publicar APKs, SWFs, ANEs, JARs ou bibliotecas nativas da Adobe.
-
