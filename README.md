@@ -4,6 +4,8 @@ Investigação técnica para avaliar a portabilidade autorizada do Adobe Photosh
 
 > Status: **projeto ativo — autópsia e prova de conceito**. O APK original está disponível como asset da Release pública; ele não é versionado no histórico Git.
 
+O alvo principal agora é **Android 16 / API 36**. A primeira PoC instala no aparelho Android 16 conectado, mas ainda falha ao carregar o `libCore.so` do AIR legado; o resultado está em [docs/test-results-android16.md](docs/test-results-android16.md).
+
 ## Objetivo
 
 Determinar se o APK antigo pode ser executado em Android moderno preservando o máximo possível das funções originais, identificando os componentes que exigiriam atualização, substituição ou recompilação.

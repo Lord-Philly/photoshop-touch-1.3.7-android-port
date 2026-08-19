@@ -43,6 +43,8 @@ Corrigir apenas problemas comprovados:
 
 Se uma biblioteca não puder ser recompilada, registrar a limitação em vez de criar uma implementação especulativa.
 
+O script `scripts/prepare-modern-poc.ps1` cria uma cópia de trabalho com target SDK moderno, `android:exported` explícito e versão experimental. Essa variante é deliberadamente limitada: ela mede se o empacotamento/instalação avança, mas não resolve AIR, ANE, JNI, armazenamento ou APIs legadas por conta própria.
+
 ## Fase 4 — Validação
 
 Testar progressivamente em dispositivos/emuladores disponíveis. O mínimo é validar instalação, inicialização, criação de documento, importação, camadas, pincéis, filtros, transformação, salvar/abrir PSDX e exportação.
@@ -59,4 +61,3 @@ Uma build só pode ser considerada candidata quando:
 - as funções principais foram testadas;
 - limitações e serviços indisponíveis estão listados;
 - nenhum binário proprietário foi publicado neste repositório.
-

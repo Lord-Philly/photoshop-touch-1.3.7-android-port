@@ -126,3 +126,5 @@ Classificação atual: **difícil, ainda não inviável**.
 - Prova de conceito com um AIR SDK compatível.
 
 Nenhum desses itens deve ser marcado como concluído sem evidência reproduzível.
+
+Para a análise executada com ferramentas de engenharia reversa, veja [deep-autopsy.md](deep-autopsy.md).
