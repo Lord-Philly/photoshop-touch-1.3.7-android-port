@@ -16,6 +16,8 @@ O aparelho foi detectado e mantido conectado pelo ADB durante os testes.
 | PoC target 35, primeiro build | Falhou | Não executou | `resources.arsc` precisava estar descompactado/alinhado |
 | PoC target 36, alinhada | Sucesso | Crash | `libCore.so` não carrega `libstagefright.so` |
 | Diagnóstico target 24 | Sucesso | Crash | Mesmo bloqueio nativo; reduzir target não resolve |
+| AIR 51 target 36, sem ANEs declaradas | Sucesso | Processo vivo; splash | Runtime moderno carrega; funcionalidade do editor não comprovada |
+| AIR 51 target 36, ANEs reconstruídas | Sucesso | Crash | ANEs antigas recusadas por `DT_TEXTREL` |
 
 ## APK original
 
@@ -74,7 +76,29 @@ Foi criado um segundo APK com `targetSdkVersion=24`, instalado com sucesso e exe
 
 Conclusão: o target mínimo de instalação é um problema separado. O bloqueio de execução é a dependência nativa privada do AIR legado.
 
+## PoC com AIR 51
+
+O runtime legado foi substituído pelo AIR SDK 51.3.4.1, com `targetSdkVersion=36`.
+O `libCore.so` moderno carrega no Android 16 e elimina o erro inicial de
+`libstagefright.so` privada. O APK sem extensões declaradas manteve o processo
+vivo por 12 segundos, mas ficou no splash porque o SWF depende das ANEs.
+
+As ANEs foram reconstruídas para diagnóstico com os descriptors e SWFs presentes
+no APK original. A instalação foi bem-sucedida, mas o log mostrou:
+
+```text
+has text relocations
+dlopen failed: .../libsibsynclib.so
+dlopen failed: .../libair.com.adobe.cc.sync.SyncEngine.so
+dlopen failed: .../libTTPixelExtensionAndroid.so
+No implementation found for ... TTPixelExtension.initIDs()
+```
+
+O símbolo JNI existe na biblioteca, mas o linker a rejeita antes de disponibilizá-lo.
+Uma variante que neutraliza a carga Java das ANEs chega a `JNI DETECTED ERROR IN
+APPLICATION: java_object == null`, confirmando uma segunda dependência nativa do
+SWF. O relatório completo está em [air51-modern-poc.md](air51-modern-poc.md).
+
 ## Próxima ação técnica
 
 Investigar a substituição/portabilidade de `libCore.so` e das bibliotecas privadas dependentes, preservando a ABI esperada pelo AIR e pelo `TTPixelExtension`. Não adianta continuar variando somente `targetSdkVersion`.
-

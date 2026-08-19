@@ -4,7 +4,7 @@ Investigação técnica para avaliar a portabilidade autorizada do Adobe Photosh
 
 > Status: **projeto ativo — autópsia e prova de conceito**. O APK original está disponível como asset da Release pública; ele não é versionado no histórico Git.
 
-O alvo principal agora é **Android 16 / API 36**. A primeira PoC instala no aparelho Android 16 conectado, mas ainda falha ao carregar o `libCore.so` do AIR legado; o resultado está em [docs/test-results-android16.md](docs/test-results-android16.md).
+O alvo principal agora é **Android 16 / API 36**. Uma build com AIR 51 instala e carrega o runtime moderno no aparelho conectado; a execução completa ainda é bloqueada pelas ANEs nativas antigas. O resultado detalhado está em [docs/air51-modern-poc.md](docs/air51-modern-poc.md).
 
 ## Objetivo
 
@@ -48,6 +48,7 @@ O script faz uma leitura somente, calcula o SHA-256, lista o conteúdo do ZIP/AP
 ```text
 docs/
   initial-apk-autopsy.md   # evidências e achados da primeira análise
+  air51-modern-poc.md      # PoC AIR 51, Android 16 e bloqueio das ANEs
   porting-plan.md          # fases e critérios de decisão
   prompt-for-dev.md        # prompt operacional para dev ou IA
 scripts/

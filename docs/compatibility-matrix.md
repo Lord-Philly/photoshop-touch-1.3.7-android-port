@@ -15,7 +15,9 @@ Matriz mínima: Android 10, 11, 12, 13, 14, 15 e 16.
 | 13 | 33 | Ainda não testado | — | — | Pendente |
 | 14 | 34 | Ainda não testado | — | — | Pendente |
 | 15 | 35 | Ainda não testado | — | — | Pendente |
-| 16 | 36 | Redmi Note 9S, ARM64/ARMv7 | PoC target 36 instala | Crash em `libCore.so` | Bloqueio nativo confirmado |
+| 16 | 36 | Redmi Note 9S, ARM64/ARMv7 | AIR 51 target 36 instala | Runtime moderno inicia; ANEs antigas causam crash | Bloqueio nativo confirmado |
+
+Detalhes da troca do runtime e dos hashes estão em [air51-modern-poc.md](air51-modern-poc.md).
 
 ## Critério de aprovação
 
@@ -32,4 +34,3 @@ Uma versão só será marcada como compatível quando:
 9. registrar o resultado em um dispositivo/ambiente reproduzível.
 
 “Instala” sozinho não é compatibilidade.
-
