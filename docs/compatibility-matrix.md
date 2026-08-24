@@ -15,7 +15,7 @@ Matriz mínima: Android 10, 11, 12, 13, 14, 15 e 16.
 | 13 | 33 | Ainda não testado | — | — | Pendente |
 | 14 | 34 | Ainda não testado | — | — | Pendente |
 | 15 | 35 | Ainda não testado | — | — | Pendente |
-| 16 | 36 | Redmi Note 9S, ARM64/ARMv7 | AIR 51 target 36 + ANE PIC instala | Runtime e três `.so` substitutos iniciam; editor ainda não validado | Bootstrap confirmado; funcionalidade pendente |
+| 16 | 36 | Redmi Note 9S, ARM64/ARMv7 | AIR 51 target 36 + ANE PIC + trava de retrato instala | Editor abre e opera; composição corrigida por ciclo sintético de eventos (toque único); autocorreção no boot em validação | Bootstrap e editor funcionais; automação pendente |
 
 Detalhes da troca do runtime e dos hashes estão em [air51-modern-poc.md](air51-modern-poc.md).
 

@@ -4,7 +4,7 @@ Investigação técnica para avaliar a portabilidade autorizada do Adobe Photosh
 
 > Status: **projeto ativo — autópsia e prova de conceito**. O APK original está disponível como asset da Release pública; ele não é versionado no histórico Git.
 
-O alvo principal agora é **Android 16 / API 36**. Uma build com AIR 51 e uma camada ANE ARMv7 PIC instala, carrega o runtime moderno, remove o splash e mantém o processo vivo no aparelho conectado; a funcionalidade do editor ainda está em implementação. O resultado detalhado está em [docs/air51-modern-poc.md](docs/air51-modern-poc.md).
+O alvo principal agora é **Android 16 / API 36**. Uma build com AIR 51 e uma camada ANE ARMv7 PIC instala, carrega o runtime moderno, remove o splash e mantém o processo vivo. A fase atual comprova o editor operando em retrato travado: a composição nasce desalinhada (o recalculo nativo de orientação não existe no boot — verificado por análise de referências cruzadas) e um ciclo sintético de eventos corrige o estado; a correção automática no fim do boot é o trabalho em curso. Os resultados estão em [docs/air51-modern-poc.md](docs/air51-modern-poc.md) e [docs/orientation-heal-poc.md](docs/orientation-heal-poc.md).
 
 ## Objetivo
 
@@ -49,6 +49,7 @@ O script faz uma leitura somente, calcula o SHA-256, lista o conteúdo do ZIP/AP
 docs/
   initial-apk-autopsy.md   # evidências e achados da primeira análise
   air51-modern-poc.md      # PoC AIR 51, Android 16 e bloqueio das ANEs
+  orientation-heal-poc.md  # retrato travado, causa raiz e ciclo de autocorreção
 native/ane-compat/         # camada PIC experimental para os contratos JNI das ANEs
   porting-plan.md          # fases e critérios de decisão
   prompt-for-dev.md        # prompt operacional para dev ou IA
