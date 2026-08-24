@@ -17,6 +17,9 @@ Todos os APKs estão na release [`Ps Touch (versões)`](https://github.com/Lord-
 | `pstouchbase_1.3.7.apk` | Base original 1.3.7 para **dispositivos antigos** |
 | `pstouchbase_1.7.7.apk` | Base original 1.7.7 para **dispositivos antigos** |
 
+| ![](https://github.com/Lord-Philly/photoshop-touch-1.3.7-android-port/releases/download/versoes/ps137start.png) | ![](https://github.com/Lord-Philly/photoshop-touch-1.3.7-android-port/releases/download/versoes/ps177start.png) |
+|---|---|
+| **ps137** — tela inicial (retrato) | **ps177** — tela inicial (paisagem) |
 Detalhes, requisitos e hashes em [docs/version-matrix.md](docs/version-matrix.md).
 
 ## Objetivo

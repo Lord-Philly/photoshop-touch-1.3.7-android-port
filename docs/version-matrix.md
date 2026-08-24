@@ -7,6 +7,12 @@ Catálogo oficial das builds publicadas nas Releases deste repositório. Duas fa
 | **Bases originais** (`pstouchbase_*`) | `pstouchbase_1.3.7.apk`, `pstouchbase_1.7.7.apk` | Dispositivos **antigos** (era Android 2.x–4.x). Em Android moderno só instalam via ferramentas que contornam o bloqueio de `targetSdk` baixo (ex.: MT Manager) |
 | **Ports modernos** (`psNNN`) | `ps137.apk`, `ps177.apk` | Dispositivos **modernos** (Android 10–16), instalação pelo gerenciador de arquivos normal |
 
+## Telas iniciais
+
+| ![](https://github.com/Lord-Philly/photoshop-touch-1.3.7-android-port/releases/download/versoes/ps137start.png) | ![](https://github.com/Lord-Philly/photoshop-touch-1.3.7-android-port/releases/download/versoes/ps177start.png) |
+|---|---|
+| **ps137** — tela inicial (retrato) | **ps177** — tela inicial (paisagem) |
+
 ## Tabela-resumo
 
 | Arquivo | Conteúdo | Runtime | Orientação | Pacote Android | `targetSdk` |
