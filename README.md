@@ -11,6 +11,9 @@
 [![Licença](https://img.shields.io/badge/licen%C3%A7a-n%C3%A3o%20definida-lightgrey?style=flat-square)](#-licença)
 
 </div>
+O **Plano B nativo** também começou em [native-app](native-app/), com editor Kotlin/Canvas/Skia-backed para Android 10–16: pincel, desfazer, limpar e exportação PNG. O roadmap está em [docs/native-app-plan-b.md](docs/native-app-plan-b.md).
+
+## Objetivo
 
 ---
 
@@ -180,6 +183,8 @@ O empacotamento final (troca de dex/libs, patch binário do manifesto, assinatur
 │   ├── ISSUE_TEMPLATE/          # templates de issue
 │   └── CONTRIBUTING.md          # guia de contribuição
 ├── SECURITY.md                  # política de segurança e artefatos
+├── native-app/                  # reconstrução nativa Kotlin do editor (Plano B)
+│   └── README.md                # build e estado da fatia vertical
 └── README.md
 ```
 

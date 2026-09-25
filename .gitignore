@@ -20,6 +20,7 @@ tools/
 
 # Android/Java/build output
 .gradle/
+local.properties
 build/
 out/
 bin/
@@ -32,4 +33,3 @@ obj/
 *.iml
 .DS_Store
 Thumbs.db
-
