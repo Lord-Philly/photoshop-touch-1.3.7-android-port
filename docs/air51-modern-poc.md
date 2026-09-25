@@ -29,6 +29,21 @@ e [documentação de ANEs](https://airsdk.dev/docs/building/using-native-extensi
 Todas as builds foram assinadas com uma chave de teste local. Elas não são uma
 atualização assinada pela Adobe e não devem ser tratadas como versão estável.
 
+## Revalidação do build preservado no Android 13
+
+Em 2026-09-25 foi instalado no Redmi 10C (`220333QAG`, serial ADB `b5aa2b42`,
+Android 13 / API 33, ABI ARM64 com suporte a ARMv7) o pacote lateral
+`air.com.lordphilly.pstouch.originalcompat`, com o artefato
+`original-preserved-compat2.apk`. A instalação foi concluída sem substituir o
+pacote `air.com.adobe.pstouchphone` existente.
+
+Resultado: `AIRAppEntry` permanece em primeiro plano, sem crash, mas a superfície
+fica preta e o editor não aparece. Portanto, a variante confirma apenas que o
+runtime AIR 51 e as bibliotecas PIC carregam nesse aparelho; os stubs atuais das
+ANEs ainda não satisfazem o bootstrap do `TTPixel.swf`. O próximo marco deve
+implementar o primeiro contrato real de inicialização do TTPixel, começando por
+`ECUtils`/`TTPixelExtensionContextImpExp`, antes de testar filtros ou a UI.
+
 ## O que foi comprovado
 
 1. O Android 16 instala a aplicação quando o pacote usa AIR moderno e target 36.
