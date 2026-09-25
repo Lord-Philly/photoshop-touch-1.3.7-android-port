@@ -17,6 +17,12 @@ Esta é uma prova vertical do novo motor, não uma reimplementação completa do
 Photoshop Touch. O modelo de camadas, PSDX, filtros e importação entram nas
 próximas etapas.
 
+## APK experimental
+
+O APK debug desta primeira fatia está publicado na release [`v0.4-native-editor-poc`](https://github.com/Lord-Philly/photoshop-touch-1.3.7-android-port/releases/tag/v0.4-native-editor-poc).
+Ele foi compilado localmente com sucesso; a instalação no aparelho físico fica
+para quando a sessão de depuração USB estiver enumerada novamente.
+
 ## Compilar
 
 No Windows, com Android SDK e Java 17:

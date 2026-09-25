@@ -16,6 +16,8 @@ começa em paralelo como um aplicativo novo, sem dependência do AIR.
 Isso comprova a base de entrada, renderização Skia-backed e armazenamento
 compatível com Android 10–16 antes de portarmos o restante do produto.
 
+O APK experimental dessa etapa está na release [`v0.4-native-editor-poc`](https://github.com/Lord-Philly/photoshop-touch-1.3.7-android-port/releases/tag/v0.4-native-editor-poc). A compilação foi verificada com o Gradle Wrapper; o teste de instalação no Redmi Note 9S aguarda o retorno da sessão ADB USB.
+
 ## Próximos marcos
 
 ### M1 — documento e camadas
