@@ -3,7 +3,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE := TTPixelExtensionAndroid
 LOCAL_SRC_FILES := compat_stubs.c
-LOCAL_LDLIBS := -llog
+LOCAL_LDLIBS := -llog -lz
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)

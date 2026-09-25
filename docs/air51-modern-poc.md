@@ -44,6 +44,142 @@ ANEs ainda não satisfazem o bootstrap do `TTPixel.swf`. O próximo marco deve
 implementar o primeiro contrato real de inicialização do TTPixel, começando por
 `ECUtils`/`TTPixelExtensionContextImpExp`, antes de testar filtros ou a UI.
 
+## Contrato incremental TTPixel: ECUtils + ImpExp
+
+Em 2026-09-25 foi implementado o primeiro contrato funcional na fonte
+[`native/ane-compat/compat_stubs.c`](../native/ane-compat/compat_stubs.c), sem
+alterar o SWF original e sem substituir o pacote Adobe instalado.
+
+### ECUtils implementado
+
+As entradas JNI abaixo deixaram de ser stubs vazios:
+
+```text
+bitmapDataCopy
+bitmapDataResample
+getPixelsEx
+setPixelsEx
+moveBitmapDataEx
+getScaledPixelsEx
+uncompressBitmapDataEx
+lz4GetMaxCompressDestLength
+lz4Compress
+lz4Uncompress
+lz4Free
+```
+
+Os caminhos de pixels validam stride, regiao e capacidade do `ByteBuffer`. A
+descompressao bitmap usa zlib. O LZ4 emite um bloco literal valido e possui
+decoder correspondente; ele ainda nao tem a otimizacao de busca de matches do
+LZ4 original. A conversao de alpha premultiplicado e uma implementacao de
+compatibilidade baseada no contrato dos wrappers Java; deve ser comparada com
+imagens reais assim que o SWF atingir essas funcoes.
+
+Continuam deliberadamente sem implementacao real, por nao terem sido observadas
+nesta etapa: operacoes de arquivo bitmap, `alphaBlend`, `isolateColor`,
+`getPixelsBitmapEx`, `copyBitmapData` e os demais contextos nao relacionados ao
+primeiro contrato.
+
+### TTPixelExtensionContextImpExp implementado
+
+O estado `exporterPtr` agora aponta para um estado nativo que guarda os bytes,
+tamanho, progresso, conclusao e cancelamento. Foram implementados:
+
+```text
+startEncodeLz4       startEncodeZLib
+startEncodePNG       startEncodeJPEG
+getEncodedData       getEncodedDataSize
+getEncodingProgress  hasFinishedEncoding
+requestCancel        waitFinishedEncoding
+clearEncodedData     isPossiblyPremultipliedData
+premultiplyData      unPremultiplyData
+```
+
+PNG/JPEG usam `android.graphics.Bitmap.compress`; zlib e LZ4 usam buffers nativos.
+O JPEG recebe o caminho textual do wrapper original, mas esta POC nao grava nesse
+caminho: retorna os bytes para `getEncodedData`, que e o fluxo usado pelo
+contexto Java. A codificacao e sincrona nesta primeira implementacao; progresso
+fica em 100 quando a funcao retorna e eventos de conclusao sao despachados para
+o contexto.
+
+### Mapa estatico dos nomes ActionScript registrados
+
+O descriptor Java do contexto `ImpExp` registra exatamente:
+
+```text
+startEncodeLz4, startEncodeZLib, startEncodeJPEG, startEncodePNG,
+getEncodedData, getEncodedDataSize, getEncodingProgress,
+hasFinishedEncoding, requestCancel, waitFinishedEncoding, clearEncodedData
+```
+
+O contexto `Utils` registra:
+
+```text
+trace, getDeviceID, getDeviceName, canLaunchApp, launchApp, leaveApp,
+setStatusBarHidden, getNetworkState, resolveImageContentURI,
+copyURIContentToFile, isolateColor, clipboardHasFormat,
+clipboardSetFormatData, clipboardSetMultiData, clipboardGetFormatData,
+plistToXMLString, compressBitmapRLE, getPixelsEx, setPixelsEx,
+lz4Compress, lz4Uncompress, lz4Deflate, lz4Inflate, getPixelsBitmapEx,
+getMemoryStatsEx, uncompressBitmapDataEx, bitmapDataToFileEx,
+bitmapDataFromFileEx, getScaledPixelsEx, bitmapFileCreateEmpty,
+bitmapFileCreateFromBitmapData, bitmapFileWrite, bitmapFileRead,
+bitmapFileResample, bitmapDataCopy, bitmapDataResample, getSystemInfo,
+setWakeLock, getLocalIP, alphaBlend, getTimestamp, openPath,
+setRequestedOrientation, getRequestedOrientation,
+showNetworkActivityIndicator
+```
+
+A lista acima e o mapa exato de funcoes exposto pelo Java original. A sequencia
+exata de chamadas do `TTPixel.swf` durante o bootstrap ainda nao pode ser
+marcada como observada: no teste abaixo nem o carregamento da biblioteca nativa
+ocorreu, logo nao houve trace JNI para atribuir ao SWF.
+
+### APK side-by-side e resultado verificavel
+
+Build compilada com NDK 25.2.9519653 para `armeabi-v7a` e empacotada com AIR
+51.3.4.1:
+
+```text
+APK: original-preserved-ecutils-impexp-02.apk
+SHA-256: AACDA5CEB7CF4F216B6992AF75B4BAA48CFFB71110E86F8294E82A4F36AB39D0
+Package de teste: air.com.lordphilly.pstouch.originalcompat
+versionCode: 1003010
+Dispositivo: Redmi 10C / 220333QAG / Android 13 API 33
+```
+
+O APK foi instalado separadamente via `/data/local/tmp` e `pm install -r`.
+O pacote original permaneceu intacto:
+
+```text
+air.com.adobe.pstouchphone / versionCode 9009009 / targetSdk 17
+```
+
+Resultado da execucao: `AIRAppEntry` permanece vivo, sem crash, mas a superficie
+fica preta. O marcador de carregamento `TTPixelCompat` e nenhuma chamada JNI
+`ECUtils`/`ImpExp` aparecem no `logcat`, mesmo apos limpar os dados somente do
+pacote de teste. Isso desloca o proximo bloqueio para antes da ANE: carregamento
+do SWF, registro/resolucao da extensao ou inicializacao do stage AIR. Nao ha
+evidencia suficiente para afirmar que o bootstrap passou pelo contrato real.
+
+Limite documentado: a implementacao nativa esta compilada e instalada no APK de
+teste, mas a validacao comportamental no aparelho permanece pendente ate o SWF
+chegar a primeira chamada JNI. Nao avancar para outras ANEs ou para a interface
+antes de obter esse primeiro trace.
+
+Após esse teste, a fonte recebeu apenas ajustes de conversao de alpha e validacao
+de regioes, e foi recompilada no artefato `original-preserved-ecutils-impexp-03.apk`:
+
+```text
+SHA-256: 7422A5106919724E291B0D95FE1C71739D851E891117DB34578A37ABB74DA7C4
+versionCode: 1003011
+```
+
+Essa build esta pronta, mas a instalacao final ficou pendente porque o ADB do
+dispositivo voltou ao estado `unauthorized` e exige confirmacao manual da chave
+de depuracao USB. O teste documentado acima continua sendo o ultimo teste de
+execucao efetivamente instalado.
+
 ## O que foi comprovado
 
 1. O Android 16 instala a aplicação quando o pacote usa AIR moderno e target 36.
